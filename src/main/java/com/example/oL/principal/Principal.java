@@ -1,15 +1,13 @@
 package com.example.oL.principal;
 
-import com.example.oL.model.ConverterDados;
-import com.example.oL.model.DadosEP;
-import com.example.oL.model.DadosSerie;
-import com.example.oL.model.DadosTemporada;
+import com.example.oL.model.*;
 import com.example.oL.service.CosumoAPI;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
     private CosumoAPI consumo = new CosumoAPI();
@@ -45,6 +43,12 @@ public class Principal {
         //mesma coisa só que usando lambda
         //classe temporada. para toda temporada 't',onde 't.eps', cara elementos 'eps' será 'e' e escrevar o 'TituloEP' de cada 'e' respectivo.
         temporadas.forEach(t->t.eps().forEach(e-> System.out.println(e.TitulodoEP())));
+        //foi criada uma classe Epsodio, essa classe é chamada de Ep e ela recebe o mapeamento de temporadas, onde cade temporada t, será pego o fuxo de t.eps(todos os epsódios de cada temporada), eles seram
+        //mapeados e depois seram enviados para a classe Epsodios com as clases(será feito um construtor com os dois atributos envolvidos e eles seram coletados)
+        List<Epsodio>Ep= temporadas.stream().flatMap(t->t.eps().stream().map(d->new Epsodio(t.numero(),d))).collect(Collectors.toList());
+        Ep.forEach(System.out::println);
+
+
 
     }
 }
